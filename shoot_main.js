@@ -1,6 +1,6 @@
 let des = document.getElementById("des").getContext("2d")
 
-let player = new Player(150,250,100,50,"./assets/nave.png")
+let player = new Player(500,500,50,50,"./assets/nave.png")
 
 document.addEventListener('keydown',(e)=>{
     // console.log(e.key)
