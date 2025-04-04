@@ -41,4 +41,15 @@ class Player extends Obj{
     }
 }
 
+class Tiro extends Obj{
+    des_tiro(){
+        des.fillStyle = this.a
+        des.fillRect(this.x, this.y, this.w, this.h)
+    }
+
+    mov(){
+        this.y -= 10
+    }
+}
+
 
