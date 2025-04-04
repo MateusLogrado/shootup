@@ -34,13 +34,37 @@ document.addEventListener('keyup', (e)=>{
     }
 })
 
+document.addEventListener('keypress', (ev)=>{
+    if (ev.key === 'x') {
+        grupoTiros.push(new Tiro(player.x - 4 + player.w / 2, player.y, 8, 16, 'red'))
+        console.log(grupoTiros)
+    }
+})
+
+let grupoTiros = [] 
+let tiros = {
+    des(){
+        grupoTiros.forEach((tiro)=>{
+            tiro.des_tiro()
+        })
+    },
+    atual(){
+        grupoTiros.forEach((tiro)=>{
+            tiro.mov()
+            if(tiro.y <= -10){
+                grupoTiros.splice(tiro[0],1)
+            }
+        })
+    }
+}
 function atualiza(){
     player.move()
-
+    tiros.atual()
 }
 
 function desenha(){
     player.des_obj()
+    tiros.des()
 }
 
 function main(){
