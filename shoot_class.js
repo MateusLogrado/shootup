@@ -49,6 +49,25 @@ class Player extends Obj{
     }
 }
 
+class Enemy extends Obj{
+    direita = true
+
+            mov(){
+                if(this.direita == true){
+                    this.x += 10
+                }else if(this.direita == false){
+                    this.x -= 10
+                }
+                console.log(this.x)
+
+                if(this.x === 490){
+                    this.direita = false
+                }else if(this.x === 10){
+                    this.direita = true
+                }
+            }    
+}
+
 class Tiro extends Obj{
     des_tiro(){
         des.fillStyle = this.a

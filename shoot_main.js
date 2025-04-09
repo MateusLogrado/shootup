@@ -1,6 +1,7 @@
 let des = document.getElementById("des").getContext("2d")
 
-let player = new Player(500,500,50,50,"./assets/nave.png")
+let player = new Player(484,500,50,50,"./assets/nave.png")
+let enemy01 = new Enemy(250,50,100,100,"./assets/enemy01.png")
 
 let p1 = new Texto()
 
@@ -74,12 +75,14 @@ let tiros = {
 function atualiza(){
     player.move()
     tiros.atual()
+    enemy01.mov()
 }
 
 function desenha(){
     p1.des_text(`Pontos: ${player.pts}`,600,50,'black','26px Times')
     player.des_obj()
     tiros.des()
+    enemy01.des_obj()
 }
 
 function main(){
