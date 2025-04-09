@@ -58,6 +58,15 @@ let tiros = {
                 grupoTiros.splice(tiro[0],1)
             }
         })
+    },
+
+    destroiTiro(){
+        grupoTiros.forEach((tiro)=>{
+            if(enemy01.colid(tiro)){
+                grupoTiros.splice(grupoTiros.indexOf(tiro), 1)
+                player.pts +=100
+            }
+        })
     }
 }
 //function pontos(){
@@ -76,6 +85,7 @@ function atualiza(){
     player.move()
     tiros.atual()
     enemy01.mov()
+    tiros.destroiTiro()
 }
 
 function desenha(){
