@@ -2,6 +2,8 @@ let des = document.getElementById("des").getContext("2d")
 
 let player = new Player(500,500,50,50,"./assets/nave.png")
 
+let p1 = new Texto()
+
 document.addEventListener('keydown',(e)=>{
     // console.log(e.key)
     if(e.key === 'ArrowUp'){
@@ -57,12 +59,25 @@ let tiros = {
         })
     }
 }
+//function pontos(){
+    //if(player.pts(---)){
+     //   player.pts +=100
+   // }
+//}
+
+//function colisao(){
+  //  if(player.colid(---)){
+   //     player.vida -= 1
+   // }
+//}
+
 function atualiza(){
     player.move()
     tiros.atual()
 }
 
 function desenha(){
+    p1.des_text(`Pontos: ${player.pts}`,600,50,'black','26px Times')
     player.des_obj()
     tiros.des()
 }

@@ -28,16 +28,24 @@ class Player extends Obj{
     dirY = 0
     dirX = 0
     vida = 5
-    pontos = 0
+    pts = 0
 
     move(){
         this.x += this.dirX
         this.y += this.dirY
         if(this.x <= +6){
             this.x = 6
-        }else if(this.x >= 510){
-            this.x = 510
+        }else if(this.x >= 500){
+            this.x = 500
         }
+
+        if(this.y <= +6){
+            this.y = 6
+        }else if(this.y >= 650){
+            this.y = 650
+        }
+
+
     }
 }
 
@@ -52,4 +60,12 @@ class Tiro extends Obj{
     }
 }
 
+class Texto{
+
+    des_text(texto,x,y,cor,font){
+        des.font = font
+        des.fillStyle = cor
+        des.fillText(texto,x,y)
+    }
+}
 
