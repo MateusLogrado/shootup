@@ -1,4 +1,5 @@
 let des = document.getElementById("des").getContext("2d")
+let vidaHtml = document.getElementById("vida")
 
 let player = new Player(484,500,50,50,"./assets/nave.png")
 let enemy01 = new Enemy(250,50,100,100,"./assets/enemy01.png")
@@ -8,6 +9,7 @@ let tentaculo3 = new Attack(400,-6500, 80,690, "./assets/tentaculo.PNG")
 let tentaculo4 = new Attack(200,-3300, 80,690, "./assets/tentaculo.PNG")
 
 let p1 = new Texto()
+let vida = new Texto()
 
 document.addEventListener('keydown',(e)=>{
     // console.log(e.key)
@@ -83,15 +85,27 @@ let tiros = {
    // }
 //}
 
-//function colisao(){
-  //  if(player.colid(---)){
-   //     player.vida -= 1
-   // }
-//}
+function colisao(){
+   if(player.colid(tentaculo1)){
+       player.vida -= 1
+       tentaculo1.recomeca()
+   }else if(player.colid(tentaculo2)){
+    player.vida -= 1
+    tentaculo2.recomeca()
+   }else if(player.colid(tentaculo3)){
+    player.vida -= 1
+    tentaculo3.recomeca()
+   }else if(player.colid(tentaculo4)){
+    player.vida -= 1
+    tentaculo4.recomeca()
+   }
+}
 
 function atualiza(){
-    player.move()
-    tiros.atual()
+    if(player.vida > 0){
+        player.move()
+        tiros.atual()
+    }
     if(enemy01.boss1 > 0){
         enemy01.mov()
         tentaculo1.attcakColuna()
@@ -101,12 +115,16 @@ function atualiza(){
     }
 
     tiros.destroiTiro()
+    colisao()
 }
 
 function desenha(){
     p1.des_text(`Pontos: ${player.pts}`,600,50,'black','26px Times')
-    player.des_obj()
-    tiros.des()
+    if(player.vida > 0){
+        player.des_obj()
+        tiros.des()
+    }
+
     if(enemy01.boss1 > 0){
         enemy01.des_obj()
         tentaculo1.des_obj()
@@ -114,6 +132,8 @@ function desenha(){
         tentaculo3.des_obj()
         tentaculo4.des_obj()
     }
+
+    vidaHtml.innerHTML = `Vida: ${player.vida}`
 
 }
 
