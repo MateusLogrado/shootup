@@ -2,6 +2,10 @@ let des = document.getElementById("des").getContext("2d")
 
 let player = new Player(484,500,50,50,"./assets/nave.png")
 let enemy01 = new Enemy(250,50,100,100,"./assets/enemy01.png")
+let tentaculo1 = new Attack(0,-1200, 80,690, "./assets/tentaculo.PNG")
+let tentaculo2 = new Attack(300,-4700, 80,690, "./assets/tentaculo.PNG")
+let tentaculo3 = new Attack(400,-6500, 80,690, "./assets/tentaculo.PNG")
+let tentaculo4 = new Attack(200,-3300, 80,690, "./assets/tentaculo.PNG")
 
 let p1 = new Texto()
 
@@ -90,6 +94,10 @@ function atualiza(){
     tiros.atual()
     if(enemy01.boss1 > 0){
         enemy01.mov()
+        tentaculo1.attcakColuna()
+        tentaculo2.attcakColuna()
+        tentaculo3.attcakColuna()
+        tentaculo4.attcakColuna()
     }
 
     tiros.destroiTiro()
@@ -101,6 +109,10 @@ function desenha(){
     tiros.des()
     if(enemy01.boss1 > 0){
         enemy01.des_obj()
+        tentaculo1.des_obj()
+        tentaculo2.des_obj()
+        tentaculo3.des_obj()
+        tentaculo4.des_obj()
     }
 
 }
