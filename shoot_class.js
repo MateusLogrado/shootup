@@ -79,6 +79,16 @@ class Tiro extends Obj{
     }
 }
 
+class Attack extends Obj{
+    attcakColuna(){
+        this.y += 10
+        if(this.y == 0){
+            this.y = -1000
+            this.x = Math.floor(Math.random() * ((500 - 2 + 1) + 2))
+        }
+    }
+}
+
 class Texto{
 
     des_text(texto,x,y,cor,font){
