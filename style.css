@@ -1,15 +1,69 @@
-body{
+body {
     margin: 0;
     padding: 0;
+    background-image: url(./assets/fundo2.jpg);
+    font-family: Arial, sans-serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .game {
+    display: flex;
     background-color: black;
-}
-
-canvas{
-    margin: auto;
+    padding: 20px;
+    gap: 30px;
+  }
+  
+  #game-canvas {
+    position: relative;
+    width: 1050px;
+    height: 700px;
+    background-color: #dcdcdc;
+  }
+  
+  canvas {
     position: absolute;
     top: 0;
-    bottom: 0;
     left: 0;
-    right: 0;
-    background-color: #ffffff;
-}
+    z-index: 1;
+  }
+  
+  .hud {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 700px;
+    width: 300px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .score {
+    font-size: 25px;
+    margin-bottom: 20px;
+    font-family: 'Kotta One', serif;
+  }
+  
+  .status {
+    font-size: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: 'Kotta One', serif;
+  }
+  
+  .logo {
+    width: 130%;
+    height: 310px;
+    background-color: #b33a3a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  

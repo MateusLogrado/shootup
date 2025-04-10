@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="shoot_class.js" defer></script>
-    <script src="shoot_main.js" defer></script>
-    <title>Shooter</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Kotta+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="shoot_class.js" defer></script>
+  <script src="shoot_main.js" defer></script>
+  <title>Jogo</title>
 </head>
 <body>
-    <canvas id="des" width="1050" height="700"></canvas>
+  <div class="game">
+    <div class="game-area" id="game-canvas">
+      <canvas id="des" width="1050" height="700"></canvas>
+    </div>
+    <div class="hud">
+      <div class="score">
+        <p>H.Score:</p>
+        <p>Score:</p>
+      </div>
+      <div class="status">
+        <p>Vidas:</p>
+        <p>Bombas:</p>
+      </div>
+      <div class="logo">Logo do Jogo</div>
+    </div>
+  </div>
 </body>
 </html>
