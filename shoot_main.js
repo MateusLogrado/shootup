@@ -62,9 +62,13 @@ let tiros = {
 
     destroiTiro(){
         grupoTiros.forEach((tiro)=>{
-            if(enemy01.colid(tiro)){
-                grupoTiros.splice(grupoTiros.indexOf(tiro), 1)
-                player.pts +=100
+            if(enemy01.boss1 > 0){
+                if(enemy01.colid(tiro)){
+                    grupoTiros.splice(grupoTiros.indexOf(tiro), 1)
+                    player.pts +=100
+                    enemy01.boss1 -= 1
+                    console.log(enemy01.boss1)
+                }
             }
         })
     }
@@ -84,7 +88,10 @@ let tiros = {
 function atualiza(){
     player.move()
     tiros.atual()
-    enemy01.mov()
+    if(enemy01.boss1 > 0){
+        enemy01.mov()
+    }
+
     tiros.destroiTiro()
 }
 
@@ -92,7 +99,10 @@ function desenha(){
     p1.des_text(`Pontos: ${player.pts}`,600,50,'black','26px Times')
     player.des_obj()
     tiros.des()
-    enemy01.des_obj()
+    if(enemy01.boss1 > 0){
+        enemy01.des_obj()
+    }
+
 }
 
 function main(){
