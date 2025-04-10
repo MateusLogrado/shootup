@@ -50,6 +50,7 @@ class Player extends Obj{
 }
 
 class Enemy extends Obj{
+    boss1 = 50
     direita = true
 
             mov(){
@@ -58,7 +59,6 @@ class Enemy extends Obj{
                 }else if(this.direita == false){
                     this.x -= 10
                 }
-                console.log(this.x)
 
                 if(this.x === 490){
                     this.direita = false
