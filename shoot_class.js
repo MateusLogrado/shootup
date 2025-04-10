@@ -69,7 +69,7 @@ class Enemy extends Obj{
                     this.x -= 10
                 }
 
-                if(this.x === 950){
+                if(this.x === 990){
                     this.direita = false
                 }else if(this.x === 10){
                     this.direita = true
