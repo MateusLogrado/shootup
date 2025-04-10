@@ -14,7 +14,6 @@ body {
     color: white;
 }
 
-/* Estilização do GIF */
 .menu-gif {
     position: absolute;
     left: 13%;
@@ -26,7 +25,6 @@ body {
     border-radius: 10px;
 }
 
-/* Posicionamento dos botões */
 .menu-container {
     position: absolute;
     bottom: 10%;
@@ -34,7 +32,6 @@ body {
     margin: -60px 0;
 }
 
-/* Botões em geral */
 .menu-container a {
     display: block;
     text-decoration: none;
@@ -44,12 +41,10 @@ body {
 }
 
 
-/* Botão Start maior */
 .menu-container a:first-child {
     font-size: 52px;
 }
 
-/* Instruções menor */
 .menu-container a:last-child {
     font-size: 38px;
 }
