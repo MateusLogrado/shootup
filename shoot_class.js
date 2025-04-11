@@ -57,7 +57,7 @@ class Player extends Obj{
     }
 }
 
-class points{
+class Points{
     pts = 0
     hpts = 0
     atual(){

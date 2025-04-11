@@ -4,7 +4,7 @@ let score = document.getElementById('score')
 let hScore = document.getElementById('hScore')
 
 let player = new Player(484,500,50,50,"./assets/nave.png")
-let points = new points()
+let points = new Points()
 let enemy01 = new Enemy(250,50,100,100,"./assets/enemy01.png")
 let tentaculo1 = new Attack(0,-1200, 80,690, "./assets/tentaculo.PNG")
 let tentaculo2 = new Attack(300,-4700, 80,690, "./assets/tentaculo.PNG")
@@ -194,6 +194,7 @@ function desenha(){
 
     vidaHtml.innerHTML = `Vida: ${player.vida}`
     score.innerHTML = `Score: ${points.pts}`
+    hScore.innerHTML = `High Score: ${points.hpts}`
 
 }
 
