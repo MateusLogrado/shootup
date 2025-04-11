@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url(./assets/inst.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Kotta One', serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    color: white;
+}
+
+/* Container das colunas */
+.instrucoes-container {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    max-width: 900px;
+}
+
+/* Estilização das colunas */
+.coluna {
+    width: 50%;
+    padding: 20px;
+    font-size: 30px; /* Aumentando o tamanho do texto */
+    line-height: 1.6; /* Melhor espaçamento */
+}
+
+/* Aumentando os títulos */
+h2 {
+    font-size: 32px; /* Tamanho maior para os títulos */
+}
+
+/* Linha vertical entre as colunas */
+.coluna:nth-child(1) {
+    border-right: 3px solid white; /* Linha mais visível */
+}
+
+/* Botão "Voltar" maior */
+.voltar {
+    margin-top: 30px;
+    font-size: 48px; /* Deixando o botão maior */
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+}

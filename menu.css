@@ -1,0 +1,50 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url(./assets/fundo.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    color: white;
+}
+
+.menu-gif {
+    position: absolute;
+    left: 13%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 750px;
+    height: auto;
+    box-shadow: 0px 0px 200px 50px rgba(0, 0, 0, 1);
+    border-radius: 10px;
+}
+
+.menu-container {
+    position: absolute;
+    bottom: 10%;
+    right: 11%;
+    margin: -60px 0;
+}
+
+.menu-container a {
+    display: block;
+    text-decoration: none;
+    color: white;
+    margin: 60px 0;
+    font-family: 'Kotta One', serif;
+}
+
+
+.menu-container a:first-child {
+    font-size: 52px;
+}
+
+.menu-container a:last-child {
+    font-size: 38px;
+}
