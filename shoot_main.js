@@ -50,6 +50,8 @@ document.addEventListener('keypress', (ev)=>{
     }
 })
 
+// tiro player, codigo abaixo
+
 let grupoTiros = [] 
 let tiros = {
     des(){
@@ -79,6 +81,57 @@ let tiros = {
         })
     }
 }
+
+//tiro do boss, codigo abaixo
+
+
+let grupoDiscos = []
+let discos = {
+    time1: 0,
+    time2: 0,
+
+    criaDisco(){
+        this.time1 += 1
+        this.time2 += 1
+
+
+        let pos_x = (Math.random() * (990 - 2 +1)+2)
+        if(this.time1 >=60){
+            this.time1 = 0
+            grupoDiscos.push(new Attack(pos_x,-200,50,50,'assets/pingu.png'))
+            console.log(grupoDiscos)
+        }
+        if(this.time1 >=80){
+            this.time1 = 0
+            grupoDiscos.push(new Attack(pos_x,-440,50,50,'assets/pingu.png'))
+            console.log(grupoDiscos)
+        }
+    },
+    des(){
+        grupoDiscos.forEach((disc)=>{
+            disc.des_obj()
+        })
+    },
+    destroiDisco(){
+        grupoDiscos.forEach((disc)=>{
+            if(player.colid(disc)){
+                grupoDiscos.splice(grupoDiscos.indexOf(disc), 1)
+                player.vida -= 1
+            }
+        })
+    },
+    atual(){
+        this.criaDisco()
+        this.destroiDisco()
+        grupoDiscos.forEach((disc)=>{
+            disc.mov()
+            if(disc.y >= 710){
+                grupoDiscos.splice(grupoDiscos.indexOf(disc),1)
+            }
+        })
+    }
+}
+
 //function pontos(){
     //if(player.pts(---)){
      //   player.pts +=100
@@ -87,7 +140,7 @@ let tiros = {
 
 function colisao(){
    if(player.colid(tentaculo1)){
-       player.vida -= 1
+    player.vida -= 1
        tentaculo1.recomeca()
    }else if(player.colid(tentaculo2)){
     player.vida -= 1
@@ -112,6 +165,7 @@ function atualiza(){
         tentaculo2.attcakColuna()
         tentaculo3.attcakColuna()
         tentaculo4.attcakColuna()
+        discos.atual()
     }
 
     tiros.destroiTiro()
@@ -131,6 +185,7 @@ function desenha(){
         tentaculo2.des_obj()
         tentaculo3.des_obj()
         tentaculo4.des_obj()
+        discos.des()
     }
 
     vidaHtml.innerHTML = `Vida: ${player.vida}`

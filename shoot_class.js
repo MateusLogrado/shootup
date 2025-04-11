@@ -74,7 +74,7 @@ class Enemy extends Obj{
                 }else if(this.x === 10){
                     this.direita = true
                 }
-            }    
+            }
 }
 
 class Tiro extends Obj{
@@ -100,6 +100,10 @@ class Attack extends Obj{
     recomeca(){
         this.y = -1000
         this.x = Math.floor(Math.random() * ((900 - 2 + 1) + 2))
+    }
+
+    mov(){
+        this.y += 5
     }
 }
 
