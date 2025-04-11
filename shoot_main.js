@@ -43,10 +43,14 @@ document.addEventListener('keyup', (e)=>{
     }
 })
 
-document.addEventListener('keypress', (ev)=>{
-    if (ev.key === 'x') {
+let podeAtirar = true
+
+document.addEventListener('keydown', (ev)=>{
+    if (ev.key === 'x' && podeAtirar === true) {
         grupoTiros.push(new Tiro(player.x - 4 + player.w / 2, player.y, 8, 16, 'red'))
         console.log(grupoTiros)
+        podeAtirar = false
+        setTimeout(() => { podeAtirar = true }, 200)
     }
 })
 
