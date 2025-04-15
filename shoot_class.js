@@ -24,10 +24,20 @@ class Obj{
     }
 }
 
+class Bg extends Obj{
+    mov(){
+        this.y +=5
+        if(this.y >= 700){
+            this.y = -700
+        }
+    }
+}
+
 class Player extends Obj{
     dirY = 0
     dirX = 0
     vida = 5
+    pts = 0
 
     move(){
         this.x += this.dirX
@@ -53,16 +63,6 @@ class Player extends Obj{
             return true
         }else{
             false
-        }
-    }
-}
-
-class points{
-    pts = 0
-    hpts = 0
-    atual(){
-        if(this.pts > this.hpts){
-            this.hpts = this.pts
         }
     }
 }
@@ -124,4 +124,3 @@ class Texto{
         des.fillText(texto,x,y)
     }
 }
-

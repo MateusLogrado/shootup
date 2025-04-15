@@ -1,15 +1,18 @@
 let des = document.getElementById("des").getContext("2d")
 let vidaHtml = document.getElementById("vida")
-let score = document.getElementById('score')
-let hScore = document.getElementById('hScore')
 
 let player = new Player(484,500,50,50,"./assets/nave.png")
-let points = new points()
 let enemy01 = new Enemy(250,50,100,100,"./assets/enemy01.png")
 let tentaculo1 = new Attack(0,-1200, 80,690, "./assets/tentaculo.PNG")
 let tentaculo2 = new Attack(300,-4700, 80,690, "./assets/tentaculo.PNG")
 let tentaculo3 = new Attack(400,-6500, 80,690, "./assets/tentaculo.PNG")
 let tentaculo4 = new Attack(200,-3300, 80,690, "./assets/tentaculo.PNG")
+let background1 = new Bg(0,0,1050,700, "./assets/space.jpg")
+let background2 = new Bg(0,-700,1050,700, "./assets/space.jpg")
+let background3 = new Bg(0,-1400,1050,700, "./assets/space.jpg")
+
+let p1 = new Texto()
+let vida = new Texto()
 
 document.addEventListener('keydown',(e)=>{
     // console.log(e.key)
@@ -77,7 +80,7 @@ let tiros = {
             if(enemy01.boss1 > 0){
                 if(enemy01.colid(tiro)){
                     grupoTiros.splice(grupoTiros.indexOf(tiro), 1)
-                    points.pts +=100
+                    player.pts +=100
                     enemy01.boss1 -= 1
                     console.log(enemy01.boss1)
                 }
@@ -162,7 +165,6 @@ function atualiza(){
     if(player.vida > 0){
         player.move()
         tiros.atual()
-        points.atual()
     }
     if(enemy01.boss1 > 0){
         enemy01.mov()
@@ -173,11 +175,22 @@ function atualiza(){
         discos.atual()
     }
 
+    background1.mov()
+    console.log(background1.y)
+    console.log(background2.y)
+    console.log(background3.y)
+    background2.mov()
+    background3.mov()
     tiros.destroiTiro()
     colisao()
 }
 
 function desenha(){
+    background1.des_obj()
+    background2.des_obj()
+    background3.des_obj()
+    vidaHtml.innerHTML = `Vida: ${player.vida}`
+    p1.des_text(`Pontos: ${player.pts}`,600,50,'black','26px Times')
     if(player.vida > 0){
         player.des_obj()
         tiros.des()
@@ -192,8 +205,7 @@ function desenha(){
         discos.des()
     }
 
-    vidaHtml.innerHTML = `Vida: ${player.vida}`
-    score.innerHTML = `Score: ${points.pts}`
+
 
 }
 
