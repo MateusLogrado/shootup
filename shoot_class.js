@@ -8,15 +8,15 @@ class Obj{
     }
     des_obj(){
         let img = new Image()
-        img.src = this.a 
+        img.src = this.a
         des.drawImage(img,this.x,this.y,this.w,this.h)
     }
 
     colid(objeto){
         if((this.x < objeto.x + objeto.w)&&
-          (this.x + this.w > objeto.x)&&
-          (this.y < objeto.y + objeto.h)&&
-          (this.y + this.h > objeto.y)){
+            (this.x + this.w > objeto.x)&&
+            (this.y < objeto.y + objeto.h)&&
+            (this.y + this.h > objeto.y)){
             return true
         }else{
             false
@@ -38,7 +38,7 @@ class Player extends Obj{
     dirX = 0
     vida = 5
     pts = 0
-
+    Bomba = 3
     move(){
         this.x += this.dirX
         this.y += this.dirY
@@ -57,9 +57,9 @@ class Player extends Obj{
 
     colid(objeto){
         if((this.x < objeto.x + objeto.w)&&
-          (this.x + this.w > objeto.x)&&
-          (this.y < objeto.y + objeto.h)&&
-          (this.y + this.h > objeto.y)){
+            (this.x + this.w > objeto.x)&&
+            (this.y < objeto.y + objeto.h)&&
+            (this.y + this.h > objeto.y)){
             return true
         }else{
             false
@@ -80,6 +80,7 @@ class Points{
 class Enemy extends Obj{
     boss1 = 50
     direita = true
+    maxVida = 50 // Adicionei a propriedade maxVida para referência no dano da bomba
 
             mov(){
                 if(this.direita == true){
@@ -107,8 +108,47 @@ class Tiro extends Obj{
     }
 }
 
+class Bomba extends Obj {
+    explosaoAtiva = false;
+    tempoExplosao = 0;
+    danoAplicado = false; // Controle de dano único
+
+
+
+    mov() {
+        if (!this.explosaoAtiva) {
+            this.y -= 7;
+            // Ativa explosão ao chegar no topo ou colidir
+            if (this.y <= -50) this.iniciarExplosao();
+        }
+    }
+
+    iniciarExplosao() {
+        this.explosaoAtiva = true;
+        this.tempoExplosao = 15;
+        this.w = 200;
+        this.h = 200;
+        this.x -= 85;
+        this.y -= 85;
+    }
+
+    des_bomba() {
+        if (!this.explosaoAtiva) {
+            des.fillStyle = this.a
+            des.beginPath()
+            des.arc(this.x + this.w/2, this.y + this.h/2, this.w/2, 0, Math.PI * 2)
+            des.fill()
+        } else {
+            des.fillStyle = 'rgba(255, 50, 50, 0.5)'
+            des.beginPath()
+            des.arc(this.x + this.w/2, this.y + this.h/2, this.w/2, 0, Math.PI * 2)
+            des.fill()
+        }
+    }
+}
+
 class Attack extends Obj{
-    attcakColuna(){
+    attackColuna(){
         this.y += 10
         if(this.y == 0){
             this.y = -1000
