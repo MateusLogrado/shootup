@@ -1,7 +1,7 @@
 let des = document.getElementById("des").getContext("2d")
 let vidaHtml = document.getElementById("vida")
-let score = document.getElementById('score')
-let hScore = document.getElementById('hScore')
+let score = document.getElementById("score")
+let Hscore = document.getElementById("hScore")
 
 let player = new Player(484,500,50,50,"./assets/nave.png")
 let points = new Points()
@@ -10,6 +10,12 @@ let tentaculo1 = new Attack(0,-1200, 80,690, "./assets/tentaculo.PNG")
 let tentaculo2 = new Attack(300,-4700, 80,690, "./assets/tentaculo.PNG")
 let tentaculo3 = new Attack(400,-6500, 80,690, "./assets/tentaculo.PNG")
 let tentaculo4 = new Attack(200,-3300, 80,690, "./assets/tentaculo.PNG")
+let background1 = new Bg(0,0,1050,700, "./assets/space.jpg")
+let background2 = new Bg(0,-700,1050,700, "./assets/space.jpg")
+let background3 = new Bg(0,-1400,1050,700, "./assets/space.jpg")
+
+let p1 = new Texto()
+let vida = new Texto()
 
 document.addEventListener('keydown',(e)=>{
     // console.log(e.key)
@@ -173,11 +179,21 @@ function atualiza(){
         discos.atual()
     }
 
+    background1.mov()
+    console.log(background1.y)
+    console.log(background2.y)
+    console.log(background3.y)
+    background2.mov()
+    background3.mov()
     tiros.destroiTiro()
     colisao()
 }
 
 function desenha(){
+    background1.des_obj()
+    background2.des_obj()
+    background3.des_obj()
+    vidaHtml.innerHTML = `Vida: ${player.vida}`
     if(player.vida > 0){
         player.des_obj()
         tiros.des()
@@ -194,7 +210,7 @@ function desenha(){
 
     vidaHtml.innerHTML = `Vida: ${player.vida}`
     score.innerHTML = `Score: ${points.pts}`
-    hScore.innerHTML = `High Score: ${points.hpts}`
+    Hscore.innerHTML = `H.Score: ${points.hpts}`
 
 }
 
