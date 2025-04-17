@@ -2,6 +2,7 @@ let des = document.getElementById("des").getContext("2d")
 let vidaHtml = document.getElementById("vida")
 let score = document.getElementById("score")
 let Hscore = document.getElementById("hScore")
+let bomba = document.getElementById("bomba")
 
 let player = new Player(484,500,50,50,"./assets/nave.png")
 let points = new Points()
@@ -54,15 +55,31 @@ let podeAtirar = true
 document.addEventListener('keydown', (ev)=>{
     if (ev.key === 'x' && podeAtirar === true) {
         grupoTiros.push(new Tiro(player.x - 4 + player.w / 2, player.y, 8, 16, 'red'))
-        console.log(grupoTiros)
         podeAtirar = false
         setTimeout(() => { podeAtirar = true }, 200)
     }
 })
 
+let podeBombar = true
+let bombaU = 3
+
+document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'c' && podeBombar && bombaU > 0) {
+        grupoBombas.push(new Bomba(
+            player.x + player.w/2 - 15,
+            player.y,
+            30, 30, 'purple'
+        ))
+        bombaU--
+        console.log(grupoBombas)
+        podeBombar = false
+        setTimeout(() => podeBombar = true, 2000)
+    }
+})
+
 // tiro player, codigo abaixo
 
-let grupoTiros = [] 
+let grupoTiros = []
 let tiros = {
     des(){
         grupoTiros.forEach((tiro)=>{
@@ -73,7 +90,7 @@ let tiros = {
         grupoTiros.forEach((tiro)=>{
             tiro.mov()
             if(tiro.y <= -10){
-                grupoTiros.splice(tiro[0],1)
+                grupoTiros.splice(grupoTiros.indexOf(tiro),1)
             }
         })
     },
@@ -85,7 +102,6 @@ let tiros = {
                     grupoTiros.splice(grupoTiros.indexOf(tiro), 1)
                     points.pts +=100
                     enemy01.boss1 -= 1
-                    console.log(enemy01.boss1)
                 }
             }
         })
@@ -109,12 +125,10 @@ let discos = {
         if(this.time1 >=60){
             this.time1 = 0
             grupoDiscos.push(new Attack(pos_x,-200,50,50,'assets/pingu.png'))
-            console.log(grupoDiscos)
         }
         if(this.time1 >=80){
             this.time1 = 0
             grupoDiscos.push(new Attack(pos_x,-440,50,50,'assets/pingu.png'))
-            console.log(grupoDiscos)
         }
     },
     des(){
@@ -142,16 +156,66 @@ let discos = {
     }
 }
 
+let grupoBombas = []
+
+function processaBombas() {
+    for (let i = grupoBombas.length - 1; i >= 0; i--) {
+        const bomba = grupoBombas[i]
+
+        if (!bomba.explosaoAtiva) {
+            bomba.mov()
+            // Verifica colisão com inimigo
+            if (bomba.colid(enemy01)) {
+                bomba.iniciarExplosao()
+            }
+        } else {
+            processaExplosao(bomba)
+            bomba.tempoExplosao--
+
+            if (bomba.tempoExplosao <= 0) {
+                grupoBombas.splice(i, 1)
+            }
+        }
+    }
+}
+
+function processaExplosao(bomba) {
+    const areaExplosao = new Obj(
+        bomba.x,
+        bomba.y,
+        bomba.w,
+        bomba.h,
+        ''
+    );
+
+    // Aplica dano apenas se a explosão estiver ativa e o dano ainda não foi aplicado
+    if (bomba.explosaoAtiva && !bomba.danoAplicado) {
+        if (enemy01.colid(areaExplosao)) {
+            const dano = Math.ceil(enemy01.maxVida / 5); // 1/5 da vida máxima
+            enemy01.boss1 = Math.max(0, enemy01.boss1 - dano);
+            points.pts += 500;
+            bomba.danoAplicado = true; // Marca o dano como aplicado
+        }
+    }
+
+    // Remove projéteis na área
+    for (let i = grupoDiscos.length - 1; i >= 0; i--) {
+        if (areaExplosao.colid(grupoDiscos[i])) {
+            grupoDiscos.splice(i, 1);
+        }
+    }
+}
+
 //function pontos(){
     //if(player.pts(---)){
-     //   player.pts +=100
-   // }
+    //    player.pts +=100
+    // }
 //}
 
 function colisao(){
    if(player.colid(tentaculo1)){
     player.vida -= 1
-       tentaculo1.recomeca()
+        tentaculo1.recomeca()
    }else if(player.colid(tentaculo2)){
     player.vida -= 1
     tentaculo2.recomeca()
@@ -169,20 +233,18 @@ function atualiza(){
         player.move()
         tiros.atual()
         points.atual()
+        processaBombas()
     }
     if(enemy01.boss1 > 0){
         enemy01.mov()
-        tentaculo1.attcakColuna()
-        tentaculo2.attcakColuna()
-        tentaculo3.attcakColuna()
-        tentaculo4.attcakColuna()
+        tentaculo1.attackColuna()
+        tentaculo2.attackColuna()
+        tentaculo3.attackColuna()
+        tentaculo4.attackColuna()
         discos.atual()
     }
 
     background1.mov()
-    console.log(background1.y)
-    console.log(background2.y)
-    console.log(background3.y)
     background2.mov()
     background3.mov()
     tiros.destroiTiro()
@@ -197,6 +259,7 @@ function desenha(){
     if(player.vida > 0){
         player.des_obj()
         tiros.des()
+        grupoBombas.forEach(bomba => bomba.des_bomba())
     }
 
     if(enemy01.boss1 > 0){
@@ -211,6 +274,9 @@ function desenha(){
     vidaHtml.innerHTML = `Vida: ${player.vida}`
     score.innerHTML = `Score: ${points.pts}`
     Hscore.innerHTML = `H.Score: ${points.hpts}`
+    bomba.innerHTML = `Bombas: ${bombaU}`
+    console.log(points.pts)
+    console.log(player.pts)
 
 }
 
