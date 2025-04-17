@@ -67,6 +67,16 @@ class Player extends Obj{
     }
 }
 
+class Points{
+    pts = 0
+    hpts = 0
+    atual(){
+        if(this.pts > this.hpts){
+            this.hpts = this.pts
+        }
+    }
+}
+
 class Enemy extends Obj{
     boss1 = 50
     direita = true
