@@ -80,12 +80,15 @@ document.addEventListener('keydown', (ev) => {
 let fase = 1
 
 document.addEventListener('keydown', (ev) =>{
-    if(ev.key === "r" && player.vida === 0){
+    if(ev.key === "r" && player.vida <= 0){
+        console.log("sdggdgdfgdgdf")
         fase = 1 
         player.vida = 5
         points.pts = 0 
         bombaU = 3
         enemy01.boss1 = 50
+        player.X = 700
+        player.y = 500
     }
 
 })
@@ -151,8 +154,9 @@ let discos = {
     },
     destroiDisco(){
         grupoDiscos.forEach((disc)=>{
-            if(player.colid(disc)){
+            if(player.colid(disc) && enemy01.boss1 != 0){
                 grupoDiscos.splice(grupoDiscos.indexOf(disc), 1)
+                
                 player.vida -= 1
             }
         })
@@ -219,23 +223,24 @@ function processaExplosao(bomba) {
     }
 }
 
-//function pontos(){
-    //if(player.pts(---)){
-    //    player.pts +=100
-    // }
-//}
+function faseUp(){
+    if(enemy01.boss1 === 0){
+        fase = 2
+    }
+
+}
 
 function colisao(){
-   if(player.colid(tentaculo1)){
+   if(player.colid(tentaculo1) && enemy01.boss1 != 0){
     player.vida -= 1
         tentaculo1.recomeca()
-   }else if(player.colid(tentaculo2)){
+   }else if(player.colid(tentaculo2) && enemy01.boss1 != 0){
     player.vida -= 1
     tentaculo2.recomeca()
-   }else if(player.colid(tentaculo3)){
+   }else if(player.colid(tentaculo3) && enemy01.boss1 != 0){
     player.vida -= 1
     tentaculo3.recomeca()
-   }else if(player.colid(tentaculo4)){
+   }else if(player.colid(tentaculo4) && enemy01.boss1 != 0){
     player.vida -= 1
     tentaculo4.recomeca()
    }
@@ -248,7 +253,7 @@ function atualiza(){
         points.atual()
         processaBombas()
     }
-    if(enemy01.boss1 > 0){
+    if(fase === 1){
         enemy01.mov()
         tentaculo1.attackColuna()
         tentaculo2.attackColuna()
