@@ -77,6 +77,19 @@ document.addEventListener('keydown', (ev) => {
     }
 })
 
+let fase = 1
+
+document.addEventListener('keydown', (ev) =>{
+    if(ev.key === "r" && player.vida === 0){
+        fase = 1 
+        player.vida = 5
+        points.pts = 0 
+        bombaU = 3
+        enemy01.boss1 = 50
+    }
+
+})
+
 // tiro player, codigo abaixo
 
 let grupoTiros = []
