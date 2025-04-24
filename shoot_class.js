@@ -78,7 +78,7 @@ class Points{
 }
 
 class Enemy extends Obj{
-    boss1 = 50
+    boss1 = 10
     direita = true
     maxVida = 50 // Adicionei a propriedade maxVida para referência no dano da bomba
 
