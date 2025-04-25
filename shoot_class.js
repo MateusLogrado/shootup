@@ -103,8 +103,9 @@ class Enemy extends Obj{
 
 class Tiro extends Obj{
     des_tiro(){
-        des.fillStyle = this.a
-        des.fillRect(this.x, this.y, this.w, this.h)
+        let img = new Image()
+        img.src = this.a
+        des.drawImage(img, this.x-10, this.y-10, this.w+20, this.h+20)
     }
 
     mov(){
