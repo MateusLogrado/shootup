@@ -78,9 +78,13 @@ class Points{
 }
 
 class Enemy extends Obj{
-    boss1 = 10
+    boss1 = 25
+    boss2 = 30
+    boss3 = 35
     direita = true
-    maxVida = 50 // Adicionei a propriedade maxVida para referência no dano da bomba
+    maxVida = 25
+    maxVida2 = 30
+    maxvida3 = 35
 
             mov(){
                 if(this.direita == true){
@@ -156,6 +160,14 @@ class Attack extends Obj{
         }
     }
 
+    attackColuna2(){
+        this.y += 10
+        if(this.y == 500){
+            this.y = -1000
+            this.x = Math.floor(Math.random() * ((900 - 2 + 1) + 2))
+        }
+    }
+
     recomeca(){
         this.y = -1000
         this.x = Math.floor(Math.random() * ((900 - 2 + 1) + 2))
@@ -170,6 +182,7 @@ class Texto{
 
     des_text(texto,x,y,cor,font){
         des.font = font
+        des.lineWidth = '5'
         des.fillStyle = cor
         des.fillText(texto,x,y)
     }
