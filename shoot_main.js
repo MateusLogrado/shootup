@@ -27,6 +27,12 @@ let mao2 = new Attack(200, -1400, 200,200, "./assets/mao2.png")
 let mao3 = new Attack(0, -2200, 200,200, "./assets/mao1.png")
 let mao4 = new Attack(200, -2400, 200,200, "./assets/mao2.png")
 
+let enemy03 = new Enemy(120,0,860,300,"./assets/bossfinal2.png")
+let bracoesq1 = new Obj(0,340,360,350,"./assets/braco1.png")
+let bracodir1 = new Obj(690,120,360,350,"./assets/braco2.png")
+let pacman1 = new Attack(750,270,75,65,"./assets/expelir_pacman.png")
+let pacman1b = new Attack(138,370,75,65,"./assets/expelir_pacman2.png")
+
 let p1 = new Texto()
 let vida = new Texto()
 
@@ -66,7 +72,7 @@ let podeAtirar = true
 
 document.addEventListener('keydown', (ev)=>{
     if (ev.key === 'x' && podeAtirar === true) {
-        grupoTiros.push(new Tiro(player.x - 4 + player.w / 2, player.y, 8, 16, 'red'))
+        grupoTiros.push(new Tiro(player.x - 4 + player.w / 2, player.y, 8, 16, './assets/tiro2.png'))
         podeAtirar = false
         setTimeout(() => { podeAtirar = true }, 200)
     }
@@ -88,7 +94,7 @@ document.addEventListener('keydown', (ev) => {
     }
 })
 
-let fase = 1
+let fase = 3
 
 document.addEventListener('keydown', (ev) =>{
     if(ev.key === "r" && player.vida <= 0){
@@ -256,6 +262,64 @@ function processaExplosao(bomba) {
     }
 }
 
+let grupoPacmanTiros = []
+
+let pacmanTiros = {
+    time: 0,
+
+    criaTiro() {
+        this.time += 1;
+
+        // Dispara do lado direito (pacman1) a cada 60 frames
+        if (this.time >= 60) {
+            this.time = 0;
+            grupoPacmanTiros.push(new Attack(
+                1050, // Sai da borda direita
+                270,  // Posição Y fixa (ajuste conforme necessário)
+                75, 65, './assets/expelir_pacman.png'
+            ));
+        }
+
+        // Dispara do lado esquerdo (pacman1b) a cada 80 frames (pode ajustar)
+        if (this.time >= 80) {
+            grupoPacmanTiros.push(new Attack(
+                -75, // Sai da borda esquerda
+                370, // Posição Y fixa (ajuste conforme necessário)
+                75, 65, './assets/expelir_pacman2.png'
+            ));
+        }
+    },
+
+    des() {
+        grupoPacmanTiros.forEach((tiro) => {
+            tiro.des_obj();
+        });
+    },
+
+    atual() {
+        this.criaTiro();
+        grupoPacmanTiros.forEach((tiro) => {
+            // Movimentação: pacman1 vai para a esquerda, pacman1b para a direita
+            if (tiro.a.includes('pacman.png')) { // Se for o tiro direito
+                tiro.x -= 5; // Move para a esquerda
+            } else if (tiro.a.includes('pacman2.png')) { // Se for o tiro esquerdo
+                tiro.x += 5; // Move para a direita
+            }
+
+            // Remove tiros que saíram da tela
+            if (tiro.x < -100 || tiro.x > 1150) {
+                grupoPacmanTiros.splice(grupoPacmanTiros.indexOf(tiro), 1);
+            }
+
+            // Verifica colisão com o jogador
+            if (player.colid(tiro)) {
+                player.vida -= 1;
+                grupoPacmanTiros.splice(grupoPacmanTiros.indexOf(tiro), 1);
+            }
+        });
+    }
+};
+
 function faseUp(){
     if(enemy01.boss1 <= 0 && fase === 1){
         fase = 2
@@ -358,7 +422,7 @@ function atualiza(){
         mao3.attackColuna2()
         mao4.attackColuna2()
     }else if(fase === 3){
-
+        pacmanTiros.atual()
     }
 
     background1.mov()
@@ -398,7 +462,10 @@ function desenha(){
         mao3.des_obj()
         mao4.des_obj()
     }else if(fase === 3){
-
+        enemy03.des_obj()
+        bracoesq1.des_obj()
+        bracodir1.des_obj()
+        pacmanTiros.des()
     }
 
     vidaHtml.innerHTML = `Vida: ${player.vida}`
