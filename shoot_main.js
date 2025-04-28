@@ -4,7 +4,7 @@ let score = document.getElementById("score")
 let Hscore = document.getElementById("hScore")
 let bomba = document.getElementById("bomba")
 
-let player = new Player(484,500,50,50,"./assets/nave.png")
+let player = new Player(484,500,70,70,"./assets/nave.png")
 let points = new Points()
 let textoP = new Texto()
 let text1 = new Texto()
@@ -45,13 +45,13 @@ let vida = new Texto()
 
 let song1 = new Audio("./misc/boss1ST.mp3")
 song1.loop = true
-song1.Audio = 0.6
+song1.Audio = 0.4
 let song2 = new Audio("./misc/boss2ST.mp3")
 song2.loop = true
-song2.Audio = 0.6
+song2.Audio = 0.4
 let song3 = new Audio("./misc/boss3ST.mp3")
 song3.loop = true
-song3.Audio = 0.6
+song3.Audio = 0.4
 
 document.addEventListener('keydown',(e)=>{
     // console.log(e.key)
@@ -89,7 +89,7 @@ let podeAtirar = true
 
 document.addEventListener('keydown', (ev)=>{
     if (ev.key === 'x' && podeAtirar === true) {
-        grupoTiros.push(new Tiro(player.x - 4 + player.w / 2, player.y, 8, 16, './assets/tiro2.png'))
+        grupoTiros.push(new Tiro(player.x - 4 + player.w / 2, player.y, 6, 10, './assets/tiro2.png'))
         podeAtirar = false
         setTimeout(() => { podeAtirar = true }, 200)
     }
@@ -111,7 +111,7 @@ document.addEventListener('keydown', (ev) => {
     }
 })
 
-let fase = 4
+let fase = 1
 
 document.addEventListener('keydown', (ev) =>{
     if((ev.key === "r" && player.vida <= 0) || (fase === 4 && ev.key === "r")){
