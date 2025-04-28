@@ -4,7 +4,7 @@ let score = document.getElementById("score")
 let Hscore = document.getElementById("hScore")
 let bomba = document.getElementById("bomba")
 
-let player = new Player(484,500,50,50,"./assets/nave.png")
+let player = new Player(484,500,70,70,"./assets/nave.png")
 let points = new Points()
 let textoP = new Texto()
 let text1 = new Texto()
@@ -89,7 +89,7 @@ let podeAtirar = true
 
 document.addEventListener('keydown', (ev)=>{
     if (ev.key === 'x' && podeAtirar === true) {
-        grupoTiros.push(new Tiro(player.x - 4 + player.w / 2, player.y, 8, 16, './assets/tiro2.png'))
+        grupoTiros.push(new Tiro(player.x - 4 + player.w / 2, player.y, 6, 10, './assets/tiro2.png'))
         podeAtirar = false
         setTimeout(() => { podeAtirar = true }, 200)
     }
