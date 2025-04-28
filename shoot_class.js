@@ -96,13 +96,13 @@ class Points{
 }
 
 class Enemy extends Obj{
-    boss1 = 25
-    boss2 = 30
-    boss3 = 70
+    boss1 = 20
+    boss2 = 25
+    boss3 = 40
     direita = true
-    maxVida = 25
-    maxVida2 = 30
-    maxVida3 = 70
+    maxVida = 20
+    maxVida2 = 25
+    maxVida3 = 40
 
             mov(){
                 if(this.direita == true){

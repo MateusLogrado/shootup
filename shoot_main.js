@@ -45,13 +45,13 @@ let vida = new Texto()
 
 let song1 = new Audio("./misc/boss1ST.mp3")
 song1.loop = true
-song1.Audio = 0.4
+song1.volume = 0.1
 let song2 = new Audio("./misc/boss2ST.mp3")
 song2.loop = true
-song2.Audio = 0.4
+song2.volume = 0.1
 let song3 = new Audio("./misc/boss3ST.mp3")
 song3.loop = true
-song3.Audio = 0.4
+song3.volume = 0.1
 
 document.addEventListener('keydown',(e)=>{
     // console.log(e.key)
@@ -123,7 +123,7 @@ document.addEventListener('keydown', (ev) =>{
         bombaU = 3
         enemy01.boss1 = 20
         enemy02.boss2 = 25
-        enemy03.boss3 = 70
+        enemy03.boss3 = 40
         player.x = 500
         player.y = 350
         tentaculo1.y = -1200
@@ -438,9 +438,9 @@ function desenhaEspinhos() {
     espinhos.forEach(espinho => {
         if (espinho.estado === 'aviso') {
             textoP.des_text(
-                "!",
-                espinho.x + 250,
-                680,
+                "Ataque vindo",
+                espinho.x + 150,
+                480,
                 "red",
                 "40px Arial"
             );
