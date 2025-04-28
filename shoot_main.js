@@ -7,6 +7,8 @@ let bomba = document.getElementById("bomba")
 let player = new Player(484,500,50,50,"./assets/nave.png")
 let points = new Points()
 let textoP = new Texto()
+let text1 = new Texto()
+let text2 = new Texto()
 
 let enemy01 = new Enemy(250,50,100,100,"./assets/enemy01.png")
 let tentaculo1 = new Attack(0,-1200, 80,690, "./assets/tentaculo.PNG")
@@ -100,7 +102,7 @@ document.addEventListener('keydown', (ev) => {
 let fase = 1
 
 document.addEventListener('keydown', (ev) =>{
-    if(ev.key === "r" && player.vida <= 0){
+    if((ev.key === "r" && player.vida <= 0) || fase === 4){
         console.log()
         fase = 1 
         player.fase = 1
@@ -464,6 +466,10 @@ function faseUp(){
         player.fase++
     }
 
+    if(enemy03.boss3 <= 0 && fase === 3){
+        fase = 4 
+        player.fase++
+    }
 }
 
 let a1bolcabeca = true
@@ -597,6 +603,10 @@ function desenha(){
         bracodir2.des_obj()
         pacmanTiros.des()
         desenhaEspinhos()
+    }else if(fase == 4){
+        text1.des_text("Vitoria", 450, 280, "red", "40px Times")
+        text2.des_text("Pra recomeçar aperte R", 330, 350, "red", "40px Times")
+
     }
 
     vidaHtml.innerHTML = `Vida: ${player.vida}`
