@@ -111,7 +111,7 @@ document.addEventListener('keydown', (ev) => {
     }
 })
 
-let fase = 4
+let fase = 1
 
 document.addEventListener('keydown', (ev) =>{
     if((ev.key === "r" && player.vida <= 0) || (fase === 4 && ev.key === "r")){
