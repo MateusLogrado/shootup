@@ -27,11 +27,14 @@ let mao2 = new Attack(200, -1400, 200,200, "./assets/mao2.png")
 let mao3 = new Attack(0, -2200, 200,200, "./assets/mao1.png")
 let mao4 = new Attack(200, -2400, 200,200, "./assets/mao2.png")
 
-let enemy03 = new Enemy(120,0,860,300,"./assets/bossfinal2.png")
+let enemy03 = new Enemy(120,0,860,200,"./assets/bossfinal2.png")
 let bracoesq1 = new Obj(0,340,360,350,"./assets/braco1.png")
 let bracodir1 = new Obj(690,120,360,350,"./assets/braco2.png")
-let pacman1 = new Attack(750,270,75,65,"./assets/expelir_pacman.png")
-let pacman1b = new Attack(138,370,75,65,"./assets/expelir_pacman2.png")
+let bracodir2 = new Obj(690,360,360,350,"./assets/braco2.png")
+let espinhos = [];
+let spikeCooldown = 0; 
+let tempoEspinho = 0;
+let ladoEspinho = 'esquerda'; 
 
 let p1 = new Texto()
 let vida = new Texto()
@@ -86,7 +89,7 @@ document.addEventListener('keydown', (ev) => {
         grupoBombas.push(new Bomba(
             player.x + player.w/2 - 15,
             player.y,
-            30, 30, 'purple'
+            30, 30, './assets/c4bangbang.png'
         ))
         bombaU--
         podeBombar = false
@@ -94,15 +97,19 @@ document.addEventListener('keydown', (ev) => {
     }
 })
 
-let fase = 3
+let fase = 1
 
 document.addEventListener('keydown', (ev) =>{
     if(ev.key === "r" && player.vida <= 0){
+        console.log()
         fase = 1 
+        player.fase = 1
         player.vida = 5
         points.pts = 0 
         bombaU = 3
-        enemy01.boss1 = 25
+        enemy01.boss1 = 20
+        enemy02.boss2 = 25
+        enemy03.boss3 = 70
         player.x = 500
         player.y = 350
         tentaculo1.y = -1200
@@ -148,6 +155,14 @@ let tiros = {
                     points.pts +=100
                     console.log("asa2")
                     enemy02.boss2 -= 1
+                }
+            }
+            if(enemy03.boss3 > 0 && fase === 3){
+                if(enemy03.colid(tiro) && enemy03.boss2 != 0){
+                    grupoTiros.splice(grupoTiros.indexOf(tiro), 1)
+                    points.pts +=100
+                    console.log("asa2")
+                    enemy03.boss3 -= 1
                 }
             }
         })
@@ -212,10 +227,13 @@ function processaBombas() {
         if (!bomba.explosaoAtiva) {
             bomba.mov()
             // Verifica colisão com inimigo
-            if (bomba.colid(enemy01) && enemy01.boss1 != 0) {
+            if (bomba.colid(enemy01) && enemy01.boss1 != 0 && fase === 1) {
                 bomba.iniciarExplosao()
             }
-            if (bomba.colid(enemy02) && enemy02.boss2 != 0) {
+            if (bomba.colid(enemy02) && enemy02.boss2 != 0 && fase === 2) {
+                bomba.iniciarExplosao()
+            }
+            if (bomba.colid(enemy03) && enemy02.boss3 != 0 && fase === 3) {
                 bomba.iniciarExplosao()
             }
         } else {
@@ -239,16 +257,23 @@ function processaExplosao(bomba) {
     );
 
     // Aplica dano apenas se a explosão estiver ativa e o dano ainda não foi aplicado
-    if (bomba.explosaoAtiva && !bomba.danoAplicado) {
+    if (bomba.explosaoAtiva && !bomba.danoAplicado && fase === 1) {
         if (enemy01.colid(areaExplosao) && enemy01.boss1 != 0) {
             const dano = Math.ceil(enemy01.maxVida / 5); // 1/5 da vida máxima
             enemy01.boss1 = Math.max(0, enemy01.boss1 - dano);
             points.pts += 200;
             bomba.danoAplicado = true; // Marca o dano como aplicado
         }
-        if (enemy02.colid(areaExplosao) && enemy02.boss2 != 0) {
-            const dano = Math.ceil(enemy01.maxVida2 / 5); // 1/5 da vida máxima
-            enemy02.boss2 = Math.max(0, enemy02.boss2 - dano);
+        if (enemy02.colid(areaExplosao) && enemy02.boss2 != 0 && fase === 2) {
+            const dano = Math.ceil(enemy02.maxVida2 / 5); // 1/5 da vida máxima
+            enemy02.boss2 = Math.max(0, enemy02.maxVida2 - dano);
+            points.pts += 200;
+            bomba.danoAplicado = true; // Marca o dano como aplicado
+        }
+        if (enemy03.colid(areaExplosao) && enemy03.boss3 != 0 && fase === 3) {
+            const dano = Math.ceil(enemy03.maxVida3 / 5); // 1/5 da vida máxima
+            enemy03.boss3 = Math.max(0, enemy03.boss3 - dano);
+            console.log(Math.max(0, enemy03.boss3 - dano))
             points.pts += 200;
             bomba.danoAplicado = true; // Marca o dano como aplicado
         }
@@ -271,23 +296,32 @@ let pacmanTiros = {
         this.time += 1;
 
         // Dispara do lado direito (pacman1) a cada 60 frames
-        if (this.time >= 60) {
+        if (this.time % 60 === 0) {
             this.time = 0;
             grupoPacmanTiros.push(new Attack(
-                1050, // Sai da borda direita
-                270,  // Posição Y fixa (ajuste conforme necessário)
-                75, 65, './assets/expelir_pacman.png'
+                810, // Sai da borda direita
+                300,  // Posição Y fixa (ajuste conforme necessário)
+                85, 75, './assets/expelir_pacman.png'
             ));
         }
 
         // Dispara do lado esquerdo (pacman1b) a cada 80 frames (pode ajustar)
-        if (this.time >= 80) {
+        if (this.time % 80 === 0) {
             grupoPacmanTiros.push(new Attack(
-                -75, // Sai da borda esquerda
-                370, // Posição Y fixa (ajuste conforme necessário)
-                75, 65, './assets/expelir_pacman2.png'
+                150, // Sai da borda esquerda
+                440, // Posição Y fixa (ajuste conforme necessário)
+                85, 75, './assets/expelir_pacman2.png'
             ));
         }
+        if (this.time % 60 === 0) {
+            this.time = 0;
+            grupoPacmanTiros.push(new Attack(
+                810, // Sai da borda direita
+                550,  // Posição Y fixa (ajuste conforme necessário)
+                85, 75, './assets/expelir_pacman.png'
+            ));
+        }
+        
     },
 
     des() {
@@ -320,6 +354,97 @@ let pacmanTiros = {
     }
 };
 
+function criaEspinho() {
+    tempoEspinho++;
+    
+    if (tempoEspinho >= 240 && fase === 3) {
+        tempoEspinho = 0;
+        ladoEspinho = ladoEspinho === 'esquerda' ? 'direita' : 'esquerda';
+        
+        espinhos.push({
+            x: ladoEspinho === 'esquerda' ? 0 : 525,
+            y: 700,
+            w: 525,
+            h: 0,
+            estado: 'aviso',
+            timer: 0,
+            a: "./assets/satana.png"
+        });
+    }
+}
+
+function atualizaEspinhos() {
+    if (spikeCooldown > 0) spikeCooldown--;
+    espinhos.forEach((espinho, index) => {
+        // Fase de aviso
+        if (espinho.estado === 'aviso') {
+            espinho.timer++;
+            
+            // Aviso por 1 segundo (60 frames)
+            if (espinho.timer >= 60) {
+                espinho.estado = 'crescendo';
+                espinho.timer = 0;
+            }
+        }
+        // Fase de crescimento
+        else if (espinho.estado === 'crescendo') {
+            espinho.h += 15;
+            espinho.y = 700 - espinho.h;
+            
+            // Verifica colisão
+            if (player.colid(espinho)) {
+                player.vida -= 1;
+            }
+            
+            // Quando chegar no topo
+            if (espinho.h >= 700) {
+                espinho.estado = 'ativo';
+                espinho.timer = 0;
+            }
+        }
+        // Fase ativa (espera antes de desaparecer)
+        else if (espinho.estado === 'ativo') {
+            espinho.timer++;
+            
+            // Permanece 2 segundos (120 frames)
+            if (espinho.timer >= 120) {
+                espinhos.splice(index, 1);
+            }
+        }
+        if (espinho.estado === 'crescendo' || espinho.estado === 'ativo') {
+            if (player.colid(espinho) && spikeCooldown <= 0) {
+                player.vida -= 1;
+                spikeCooldown = 120; // 2 segundos (60fps * 2)
+            }
+        }
+    });
+}
+
+function desenhaEspinhos() {
+    espinhos.forEach(espinho => {
+        if (espinho.estado === 'aviso') {
+            textoP.des_text(
+                "!",
+                espinho.x + 250,
+                680,
+                "red",
+                "40px Arial"
+            );
+        }
+        else {
+            let img = new Image();
+            img.src = espinho.a;
+            des.drawImage(
+                img,
+                espinho.x,
+                espinho.y,
+                espinho.w,
+                espinho.h
+            );
+        }
+    });
+}
+
 function faseUp(){
     if(enemy01.boss1 <= 0 && fase === 1){
         fase = 2
@@ -327,6 +452,7 @@ function faseUp(){
         player.vida = 5
         player.y = 300
         player.x = 500
+        player.fase++
 
     }
     if(enemy02.boss2 <= 0 && fase === 2){
@@ -335,6 +461,7 @@ function faseUp(){
         player.vida = 5
         player.y = 300
         player.x = 500
+        player.fase++
     }
 
 }
@@ -423,6 +550,8 @@ function atualiza(){
         mao4.attackColuna2()
     }else if(fase === 3){
         pacmanTiros.atual()
+        criaEspinho()
+        atualizaEspinhos()
     }
 
     background1.mov()
@@ -465,7 +594,9 @@ function desenha(){
         enemy03.des_obj()
         bracoesq1.des_obj()
         bracodir1.des_obj()
+        bracodir2.des_obj()
         pacmanTiros.des()
+        desenhaEspinhos()
     }
 
     vidaHtml.innerHTML = `Vida: ${player.vida}`

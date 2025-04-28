@@ -39,20 +39,38 @@ class Player extends Obj{
     vida = 5
     pts = 0
     Bomba = 3
+
     move(){
+
         this.x += this.dirX
         this.y += this.dirY
-        if(this.x <= +6){
-            this.x = 6
-        }else if(this.x >= 1000){
-            this.x = 1000
+        if(fase === 3){
+            if(this.x <= +6){
+                this.x = 6
+            }else if(this.x >= 1000){
+                this.x = 1000
+            }
+    
+            if(this.y <= +280){
+                this.y = 280
+            }else if(this.y >= 650){
+                this.y = 650
+            }
+        }else{
+            if(this.x <= +6){
+                this.x = 6
+            }else if(this.x >= 1000){
+                this.x = 1000
+            }
+    
+            if(this.y <= +6){
+                this.y = 6
+            }else if(this.y >= 650){
+                this.y = 650
+            }
         }
 
-        if(this.y <= +6){
-            this.y = 6
-        }else if(this.y >= 650){
-            this.y = 650
-        }
+
     }
 
     colid(objeto){
@@ -80,11 +98,11 @@ class Points{
 class Enemy extends Obj{
     boss1 = 25
     boss2 = 30
-    boss3 = 35
+    boss3 = 70
     direita = true
     maxVida = 25
     maxVida2 = 30
-    maxvida3 = 35
+    maxVida3 = 70
 
             mov(){
                 if(this.direita == true){
@@ -131,18 +149,18 @@ class Bomba extends Obj {
     iniciarExplosao() {
         this.explosaoAtiva = true;
         this.tempoExplosao = 15;
+        this.x = this.x - 100; // Ajuste conforme necessidade da sua imagem
+        this.y = this.y - 100; // Ajuste conforme necessidade da sua imagem
         this.w = 200;
         this.h = 200;
-        this.x -= 85;
-        this.y -= 85;
     }
 
     des_bomba() {
         if (!this.explosaoAtiva) {
-            des.fillStyle = this.a
-            des.beginPath()
-            des.arc(this.x + this.w/2, this.y + this.h/2, this.w/2, 0, Math.PI * 2)
-            des.fill()
+            // 
+            let img = new Image()
+            img.src = this.a
+            des.drawImage(img, this.x-10, this.y-10, this.w+20, this.h+20)
         } else {
             des.fillStyle = 'rgba(255, 50, 50, 0.5)'
             des.beginPath()
