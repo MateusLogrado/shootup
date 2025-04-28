@@ -45,13 +45,13 @@ let vida = new Texto()
 
 let song1 = new Audio("./misc/boss1ST.mp3")
 song1.loop = true
-song1.Audio = 0.6
+song1.Audio = 0.4
 let song2 = new Audio("./misc/boss2ST.mp3")
 song2.loop = true
-song2.Audio = 0.6
+song2.Audio = 0.4
 let song3 = new Audio("./misc/boss3ST.mp3")
 song3.loop = true
-song3.Audio = 0.6
+song3.Audio = 0.4
 
 document.addEventListener('keydown',(e)=>{
     // console.log(e.key)
