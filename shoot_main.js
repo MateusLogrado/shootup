@@ -42,8 +42,14 @@ let p1 = new Texto()
 let vida = new Texto()
 
 let song1 = new Audio("./misc/boss1ST.mp3")
+song1.loop = true
+song1.Audio = 0.6
 let song2 = new Audio("./misc/boss2ST.mp3")
+song2.loop = true
+song2.Audio = 0.6
 let song3 = new Audio("./misc/boss3ST.mp3")
+song3.loop = true
+song3.Audio = 0.6
 
 document.addEventListener('keydown',(e)=>{
     // console.log(e.key)
@@ -584,6 +590,7 @@ function desenha(){
     }
 
     if(fase === 1){
+        song1.play()
         enemy01.des_obj()
         tentaculo1.des_obj()
         tentaculo2.des_obj()
@@ -591,6 +598,8 @@ function desenha(){
         tentaculo4.des_obj()
         discos.des()
     }else if(fase === 2){
+        song1.pause()
+        song2.play()
         enemy02.des_obj()
         a1base.des_obj()
         a1esquerdo.des_obj()
@@ -601,6 +610,8 @@ function desenha(){
         mao3.des_obj()
         mao4.des_obj()
     }else if(fase === 3){
+        song2.pause()
+        song3.play()
         enemy03.des_obj()
         bracoesq1.des_obj()
         bracodir1.des_obj()
@@ -608,6 +619,7 @@ function desenha(){
         pacmanTiros.des()
         desenhaEspinhos()
     }else if(fase == 4){
+        song3.pause()
         text1.des_text("Vitoria", 450, 280, "red", "40px Times")
         text2.des_text("Pra recomeçar aperte R", 330, 350, "red", "40px Times")
 
