@@ -39,6 +39,10 @@ let ladoEspinho = 'esquerda';
 let p1 = new Texto()
 let vida = new Texto()
 
+let song1 = new Audio("./misc/boss1ST.mp3")
+let song2 = new Audio("./misc/boss2ST.mp3")
+let song3 = new Audio("./misc/boss3ST.mp3")
+
 document.addEventListener('keydown',(e)=>{
     // console.log(e.key)
     if(e.key === 'ArrowUp'){
