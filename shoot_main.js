@@ -9,6 +9,8 @@ let points = new Points()
 let textoP = new Texto()
 let text1 = new Texto()
 let text2 = new Texto()
+let emoji = new Obj(800,250,200,200,"./assets/emoji.png")
+
 
 let enemy01 = new Enemy(250,50,100,100,"./assets/enemy01.png")
 let tentaculo1 = new Attack(0,-1200, 80,690, "./assets/tentaculo.PNG")
@@ -109,10 +111,10 @@ document.addEventListener('keydown', (ev) => {
     }
 })
 
-let fase = 1
+let fase = 4
 
 document.addEventListener('keydown', (ev) =>{
-    if((ev.key === "r" && player.vida <= 0) || fase === 4){
+    if((ev.key === "r" && player.vida <= 0) || (fase === 4 && ev.key === "r")){
         console.log()
         fase = 1 
         player.fase = 1
@@ -622,6 +624,7 @@ function desenha(){
         song3.pause()
         text1.des_text("Vitoria", 450, 280, "red", "40px Times")
         text2.des_text("Pra recomeçar aperte R", 330, 350, "red", "40px Times")
+        emoji.des_obj()
 
     }
 
